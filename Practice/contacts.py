@@ -92,26 +92,6 @@ q - quit from app
                 contact.get("notes", "-") or "-"
             )
 
-        # i = 0
-        # while i < len(contacts):
-        #     contact = contacts[i]
-        #     table.add_row(
-        #         contact["name"],
-        #         contact["email"],
-        #         contact["phone"],
-        #         contact["address"] or "-",
-        #         contact["notes"] or "-",
-        #     )
-        #     i += 1
-
-        #     print("Name: {} / Email: {} / Phone: {} / Address: {} / Notes: {}".format(
-        #         contact[0],
-        #         contact[1],
-        #         contact[2],
-        #         contact[3] or "-",
-        #         contact[4] or "-",
-        #     ))
-
         console = Console()
         console.print(table)
 
