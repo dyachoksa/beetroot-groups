@@ -26,6 +26,9 @@ def get_contacts():
 
 def search_contact(value):
     """Search contact by name, email or phone number"""
+    if value is None or len(value) == 0:
+        raise ValueError("Value can't be empty")
+
     value = value.lower()
 
     contacts = get_contacts()
@@ -44,6 +47,9 @@ def search_contact(value):
 
 
 def add_contact(name, email, phone, address=None, notes=None):
+    if name is None or email is None or phone is None:
+        raise ValueError("Name, email and phone are required")
+
     address = address if len(address) > 0 else None
     notes = notes if len(notes) > 0 else None
 
@@ -62,6 +68,9 @@ def add_contact(name, email, phone, address=None, notes=None):
 
 
 def remove_contact_by_email(email):
+    if email is None or len(email) == 0:
+        raise ValueError("Email can't be blank")
+
     contacts = get_contacts()
     
     for contact in contacts:

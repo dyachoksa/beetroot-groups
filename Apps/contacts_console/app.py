@@ -14,20 +14,18 @@ print("Welcome to the Contacts v1.1!")
 
 console = Console()
 
-while True:
-    print("""
+menu = """
 a - add a contact
 d - remove the contact
 p - print list of contacts
 s - search for a contact
 q - quit from app
-    """)
+"""
 
-    action = Prompt.ask("Choise your action")
-
+def process_action(action):
     if action == "q":
         print("Thank you! See you soon!")
-        break
+        exit(0)
 
     elif action == "a":
         name = input("Enter a name: ")
@@ -45,12 +43,15 @@ q - quit from app
     elif action == "r":
         email = Prompt.ask("Enter email of the contact to remove")
 
-        ok = remove_contact_by_email(email)
+        try:
+            ok = remove_contact_by_email(email)
 
-        if ok:
-            print("Contact removed successfully!")
-        else:
-            print("No contact found with email {}".format(email))
+            if ok:
+                print("Contact removed successfully!")
+            else:
+                print("No contact found with email {}".format(email))
+        except ValueError as err:
+            print("Can't remove contact:", str(err))
     
     elif action == "s":
         value = Prompt.ask("Search")
@@ -59,7 +60,7 @@ q - quit from app
 
         if contact is None:
             print("Contact not found...")
-            continue
+            return
 
         table = get_console_table(contact, "Search results")
 
@@ -75,3 +76,19 @@ q - quit from app
 
     else:
         print("Unknown action!")
+
+
+def main():
+    while True:
+        print(menu)
+
+        action = Prompt.ask("Choise your action")
+
+        process_action(action)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nThank you. See you soon!")
