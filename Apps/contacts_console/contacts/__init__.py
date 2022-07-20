@@ -1,23 +1,33 @@
 import uuid
+import json
+import os.path
+
+filename = "contacts.json"
 
 # Contact should contain name, email, phone, address (optional) and notes (optional)
-contacts = [
-    {
-        "id": "441cbeea-b83f-46d0-924e-2069379d8102",
-        "name": 'Janice Thomas', 
-        "email": 'janice.thomas@example.com', 
-        "phone": '(272) 569-4415', 
-        "address": '2745 Thornridge Cir', 
-        "notes": None
-    },
-    {
-        "id": "2b3432ac-9417-4778-9aaa-dbfa8dc039c3",
-        "name": 'Cassandra Burton', 
-        "email": 'cassandra.burton@example.com', 
-        "phone": '(629) 326-8652', 
-        "address": None, 
-    },
-]
+contacts = []
+# contacts = [
+#     {
+#         "id": "441cbeea-b83f-46d0-924e-2069379d8102",
+#         "name": 'Janice Thomas', 
+#         "email": 'janice.thomas@example.com', 
+#         "phone": '(272) 569-4415', 
+#         "address": '2745 Thornridge Cir', 
+#         "notes": None
+#     },
+#     {
+#         "id": "2b3432ac-9417-4778-9aaa-dbfa8dc039c3",
+#         "name": 'Cassandra Burton', 
+#         "email": 'cassandra.burton@example.com', 
+#         "phone": '(629) 326-8652', 
+#         "address": None, 
+#     },
+# ]
+
+file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), filename)
+
+with open(file_path, "r") as f:
+    contacts = json.load(f)
 
 
 def get_contacts():
@@ -66,6 +76,9 @@ def add_contact(name, email, phone, address=None, notes=None):
 
     contacts.append(contact)
 
+    with open(file_path, "w") as f:
+        json.dump(contacts, f, indent=2)
+
 
 def remove_contact_by_email(email):
     if email is None or len(email) == 0:
@@ -76,6 +89,13 @@ def remove_contact_by_email(email):
     for contact in contacts:
         if email.lower() == contact["email"].lower():
             contacts.remove(contact)
+
+            with open(file_path, "w") as f:
+                data = json.dumps(contacts, indent=2)
+                f.write(data)
+                # or
+                # json.dump(contacts, f)
+
             return True
 
     return False
