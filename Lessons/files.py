@@ -23,3 +23,16 @@ with open("data.txt", "a+") as f:
 
     # writing
     f.write("Hello, World!\n")
+
+# read line by line
+# not good
+with open("data.txt") as f:
+    line = f.readline()
+    while line:
+        print(line)
+        line = f.readline()
+
+# better
+with open("data.txt") as f:
+    for line in f:
+        print(line)
